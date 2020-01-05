@@ -1,11 +1,14 @@
 package com.study.touch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.VelocityTrackerCompat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,9 +16,11 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     TextView touchtext;
     View touchview;
-
     View gestureview;
+    View velocityview;
     GestureDetector gesturedetector;
+
+    VelocityTracker velocityTracker = null;
 
     // 터치 이벤트
     @Override
@@ -88,6 +93,49 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        velocityview = findViewById(R.id.velocityview);
+        velocityview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int index = event.getActionIndex();
+                int action = event.getActionMasked();
+                int pointerId = event.getPointerId(index);
+
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (velocityTracker == null) {
+                            velocityTracker = velocityTracker.obtain();
+                        } else {
+                            velocityTracker.clear();
+                        }
+
+                        velocityTracker.addMovement(event);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        velocityTracker.addMovement(event);
+                        velocityTracker.computeCurrentVelocity(1000);
+
+                        float x = VelocityTrackerCompat.getXVelocity(velocityTracker, pointerId);
+                        float y = VelocityTrackerCompat.getYVelocity(velocityTracker, pointerId);
+
+                        touchtext.setText("x:" + x + "\ny:" + y);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        cancleTracker();
+                        break;
+                }
+                return true;
+            }
+            private void cancleTracker() {
+                if (null != velocityTracker) {
+                    velocityTracker.recycle();
+                    velocityTracker = null;
+                }
+            }
+        });
+
     }
 
     public void println(String data){
