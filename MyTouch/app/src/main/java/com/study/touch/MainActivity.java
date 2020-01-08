@@ -3,13 +3,15 @@ package com.study.touch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.VelocityTrackerCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     View gestureview;
     View velocityview;
     GestureDetector gesturedetector;
-
     VelocityTracker velocityTracker = null;
+    Button nextbutton;
 
     // 터치 이벤트
     @Override
@@ -133,6 +135,15 @@ public class MainActivity extends AppCompatActivity {
                     velocityTracker.recycle();
                     velocityTracker = null;
                 }
+            }
+        });
+
+        nextbutton = findViewById(R.id.nextbutton);
+        nextbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextpage = new Intent(getApplicationContext(), NextPage.class);
+                startActivity(nextpage);
             }
         });
 
