@@ -1,5 +1,6 @@
 package com.study.touch;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ public class NextPage extends AppCompatActivity {
 
     ImageView androidimage;
     LinearLayout moveimage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +32,14 @@ public class NextPage extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"클릭 됐습니다.",Toast.LENGTH_SHORT).show();
                         androidimage.setX(event.getX()-120);
                         androidimage.setY(event.getY()-120);
+                    case MotionEvent.ACTION_MOVE:
+                        Toast.makeText(getApplicationContext(),"이동중입니다.",Toast.LENGTH_SHORT).show();
+                        androidimage.setX(event.getX()-120);
+                        androidimage.setY(event.getY()-120);
                 }
                 return true;
             }
         });
+
     }
 }
