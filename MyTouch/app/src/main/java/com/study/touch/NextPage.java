@@ -16,6 +16,8 @@ public class NextPage extends AppCompatActivity {
     ImageView androidimage;
     LinearLayout moveimage;
 
+    private static Toast ControlToastMessage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +35,25 @@ public class NextPage extends AppCompatActivity {
                         androidimage.setX(event.getX()-120);
                         androidimage.setY(event.getY()-120);
                     case MotionEvent.ACTION_MOVE:
-                        Toast.makeText(getApplicationContext(),"이동중입니다.",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(),"이동중입니다.",Toast.LENGTH_SHORT).show();
+                        ToastCheck(getApplicationContext(), "이동했습니다.");
                         androidimage.setX(event.getX()-120);
                         androidimage.setY(event.getY()-120);
                 }
                 return true;
             }
         });
+    }
 
+    public void ToastCheck(Context context, String message){
+        if(message != null) {
+            if(ControlToastMessage == null){
+                ControlToastMessage = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            } else {
+                ControlToastMessage.setText(message);
+            }
+            ControlToastMessage.show();
+        }
     }
 }
+
