@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NextPage extends AppCompatActivity {
 
-    ImageView androidimage;
+    Button androidimage;
     LinearLayout moveimage;
 
     private static Toast ControlToastMessage;
@@ -43,7 +43,14 @@ public class NextPage extends AppCompatActivity {
                 return true;
             }
         });
+        androidimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastCheck(getApplicationContext(),"이미지 버튼을 클릭했습니다.");
+            }
+        });
     }
+
 
     public void ToastCheck(Context context, String message){
         if(message != null) {
